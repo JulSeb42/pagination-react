@@ -4,7 +4,7 @@ import ListUsers from "../pages/ListUsers"
 // Routes
 const routes = [
     {
-        path: "/users/:pageNumber",
+        path: "/",
         element: ListUsers,
     },
 ]

@@ -6,7 +6,7 @@ import { Variables, Font } from "components-react-julseb"
 // Styles
 const Container = styled(Font.P)`
     background-color: ${Variables.Colors.White};
-    padding: ${Variables.Margins.M};
+    padding: ${Variables.Spacers.M};
     box-shadow: ${Variables.Shadows.S};
     border-radius: ${Variables.Radiuses.M};
 `

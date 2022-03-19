@@ -1,6 +1,6 @@
 // Packages
 import React from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, createSearchParams } from "react-router-dom"
 import {
     Pagination as Container,
     PaginationButton,
@@ -21,20 +21,35 @@ const Pagination = ({
     // Pagination
     const nextPage = () => {
         setCurrentPage(currentPage + 1)
-        navigate(`/users/${currentPage + 1}`)
+        navigate({
+            pathname: "/",
+            search: createSearchParams({
+                page: currentPage + 1,
+            }).toString(),
+        })
         window.scrollTo(0, 0)
     }
 
     const prevPage = () => {
         setCurrentPage(currentPage - 1)
-        navigate(`/users/${currentPage - 1}`)
+        navigate({
+            pathname: "/",
+            search: createSearchParams({
+                page: currentPage - 1,
+            }).toString(),
+        })
         window.scrollTo(0, 0)
     }
 
     const changePage = e => {
         const pageNumber = Number(e.target.textContent)
         setCurrentPage(pageNumber)
-        navigate(`/users/${pageNumber}`)
+        navigate({
+            pathname: "/",
+            search: createSearchParams({
+                page: pageNumber,
+            }).toString(),
+        })
         window.scrollTo(0, 0)
     }
 
@@ -50,14 +65,14 @@ const Pagination = ({
         <Container>
             <PaginationButton
                 onClick={prevPage}
-                icon="previous"
+                prev
                 disabled={currentPage === 1 && true}
             />
 
             {getPaginationGroup()[0] !== 1 && (
                 <>
                     <PaginationButton number={1} onClick={changePage} />
-                    <PaginationButton icon="more" />
+                    <PaginationButton more />
                 </>
             )}
 
@@ -66,14 +81,14 @@ const Pagination = ({
                     number={item}
                     key={item}
                     onClick={changePage}
-                    className={currentPage === item && "active"}
+                    active={currentPage === item && true}
                 />
             ))}
 
             {getPaginationGroup()[getPaginationGroup().length - 1] !==
                 totalPages && (
                 <>
-                    <PaginationButton icon="more" />
+                    <PaginationButton more />
 
                     <PaginationButton
                         number={totalPages}
@@ -84,7 +99,7 @@ const Pagination = ({
 
             <PaginationButton
                 onClick={nextPage}
-                icon="next"
+                next
                 disabled={currentPage === totalPages && true}
             />
         </Container>

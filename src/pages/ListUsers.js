@@ -1,6 +1,7 @@
 // Packages
 import React, { useState, useEffect } from "react"
 import { Font, Grid, Loader, Wrapper, Main } from "components-react-julseb"
+import { useSearchParams } from "react-router-dom"
 
 // Components
 import Pagination from "../components/Pagination"
@@ -11,10 +12,14 @@ const ListUsers = () => {
     // Consts
     const dataLimit = 90 // Set number of items per page
     const pageLimit = 5 // Set maximum number of pages shown in pagination
+    const [page] = useSearchParams()
+    const pageNumber = page.get("page")
 
     // Data
     const [allUsers, setAllUsers] = useState([])
-    const [currentPage, setCurrentPage] = useState()
+    const [currentPage, setCurrentPage] = useState(
+        pageNumber === null ? 1 : parseInt(pageNumber)
+    )
     const [totalPages, setTotalPages] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
@@ -26,8 +31,6 @@ const ListUsers = () => {
                 setIsLoading(false)
             })
             .catch(err => console.log(err))
-        
-        setCurrentPage(parseInt(window.location.href.split("/")[4]))
     }, [])
 
     const getPaginatedData = () => {
